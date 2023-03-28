@@ -24,7 +24,7 @@ from netbox.constants import RQ_QUEUE_DEFAULT, RQ_QUEUE_HIGH, RQ_QUEUE_LOW
 # Environment setup
 #
 
-VERSION = '3.4.6'
+VERSION = '3.4.6-dev'
 
 # Hostname
 HOSTNAME = platform.node()
@@ -134,8 +134,8 @@ SESSION_COOKIE_NAME = getattr(configuration, 'SESSION_COOKIE_NAME', 'sessionid')
 SHORT_DATE_FORMAT = getattr(configuration, 'SHORT_DATE_FORMAT', 'Y-m-d')
 SHORT_DATETIME_FORMAT = getattr(configuration, 'SHORT_DATETIME_FORMAT', 'Y-m-d H:i')
 SHORT_TIME_FORMAT = getattr(configuration, 'SHORT_TIME_FORMAT', 'H:i:s')
-STORAGE_BACKEND = getattr(configuration, 'STORAGE_BACKEND', None)
-STORAGE_CONFIG = getattr(configuration, 'STORAGE_CONFIG', {})
+#STORAGE_BACKEND = getattr(configuration, 'STORAGE_BACKEND', None)
+#STORAGE_CONFIG = getattr(configuration, 'STORAGE_CONFIG', {})
 TIME_FORMAT = getattr(configuration, 'TIME_FORMAT', 'g:i a')
 TIME_ZONE = getattr(configuration, 'TIME_ZONE', 'UTC')
 ENABLE_LOCALIZATION = getattr(configuration, 'ENABLE_LOCALIZATION', False)
@@ -181,7 +181,7 @@ DATABASES = {
 #
 # Media storage
 #
-
+'''
 if STORAGE_BACKEND is not None:
     DEFAULT_FILE_STORAGE = STORAGE_BACKEND
 
@@ -210,8 +210,7 @@ if STORAGE_CONFIG and STORAGE_BACKEND is None:
         "STORAGE_CONFIG has been set in configuration.py but STORAGE_BACKEND is not defined. STORAGE_CONFIG will be "
         "ignored."
     )
-
-
+'''
 #
 # Redis
 #
@@ -343,6 +342,7 @@ INSTALLED_APPS = [
     'wireless',
     'django_rq',  # Must come after extras to allow overriding management commands
     'drf_yasg',
+    'storages',
 ]
 
 # Middleware
@@ -411,8 +411,9 @@ USE_X_FORWARDED_HOST = True
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Static files (CSS, JavaScript, Images)
-STATIC_ROOT = BASE_DIR + '/static'
-STATIC_URL = f'/{BASE_PATH}static/'
+#STATIC_ROOT = BASE_DIR + '/static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#STATIC_URL = f'/{BASE_PATH}static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'project-static', 'dist'),
     os.path.join(BASE_DIR, 'project-static', 'img'),
@@ -421,7 +422,7 @@ STATICFILES_DIRS = (
 )
 
 # Media
-MEDIA_URL = '/{}media/'.format(BASE_PATH)
+#MEDIA_URL = '/{}media/'.format(BASE_PATH)
 
 # Disable default limit of 1000 fields per request. Needed for bulk deletion of objects. (Added in Django 1.10.)
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
@@ -752,3 +753,14 @@ for plugin_name in PLUGINS:
     RQ_QUEUES.update({
         f"{plugin_name}.{queue}": RQ_PARAMS for queue in plugin_config.queues
     })
+
+DEFAULT_FILE_STORAGE = 'netbox.custom_azure.AzureMediaStorage'
+STATICFILES_STORAGE = 'netbox.custom_azure.AzureStaticStorage'
+
+STATIC_LOCATION = os.getenv("NBX_STORAGE_STATIC_CONTAINER")
+MEDIA_LOCATION = os.getenv("NBX_STORAGE_MEDIA_CONTAINER")
+
+AZURE_ACCOUNT_NAME = os.getenv("NBX_STORAGE_NAME")
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
