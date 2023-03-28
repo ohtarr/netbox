@@ -29,14 +29,14 @@ DATABASE = {
 REDIS = {
     'tasks': {
         'HOST': os.getenv("NBX_REDIS_TASKS_HOST"),
-        'PORT': int(os.getenv("NBX_REDIS_TASKS_PORT",6379)),
+        'PORT': int(os.getenv("NBX_REDIS_TASKS_PORT",6380)),
         # Comment out `HOST` and `PORT` lines and uncomment the following if using Redis Sentinel
         # 'SENTINELS': [('mysentinel.redis.example.com', 6379)],
         # 'SENTINEL_SERVICE': 'netbox',
         'USERNAME': os.getenv("NBX_REDIS_TASKS_USERNAME"),
         'PASSWORD': os.getenv("NBX_REDIS_TASKS_PASSWORD"),
         'DATABASE': int(os.getenv("NBX_REDIS_TASKS_DB",0)),
-        'SSL': False,
+        'SSL': os.getenv("NBX_REDIS_TASKS_SSL"),
         # Set this to True to skip TLS certificate verification
         # This can expose the connection to attacks, be careful
         # 'INSECURE_SKIP_TLS_VERIFY': False,
@@ -47,12 +47,12 @@ REDIS = {
         'HOST': os.getenv("NBX_REDIS_CACHING_HOST"),
         'PORT': int(os.getenv("NBX_REDIS_CACHING_PORT")),
         # Comment out `HOST` and `PORT` lines and uncomment the following if using Redis Sentinel
-        # 'SENTINELS': [('mysentinel.redis.example.com', 6379)],
+        # 'SENTINELS': [('mysentinel.redis.example.com', 6380)],
         # 'SENTINEL_SERVICE': 'netbox',
         'USERNAME': os.getenv("NBX_REDIS_CACHING_USERNAME"),
         'PASSWORD': os.getenv("NBX_REDIS_CACHING_PASSWORD"),
         'DATABASE': int(os.getenv("NBX_REDIS_CACHING_DB",1)),
-        'SSL': False,
+        'SSL': os.getenv("NBX_REDIS_CACHING_SSL"),
         # Set this to True to skip TLS certificate verification
         # This can expose the connection to attacks, be careful
         # 'INSECURE_SKIP_TLS_VERIFY': False,
