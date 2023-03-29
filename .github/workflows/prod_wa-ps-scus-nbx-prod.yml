@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'wa-ps-scus-nbx-prod'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B8C67332D6314DBE972E95EE33976019 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F86533C4DC9845479DE0DFFEC9E37A8E }}
