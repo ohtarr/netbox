@@ -545,7 +545,8 @@ REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
-        'netbox.api.authentication.TokenAuthentication',
+        #'netbox.api.authentication.TokenAuthentication',
+        'netbox.api.custom_authentication.TokenAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
@@ -766,3 +767,5 @@ AZURE_ACCOUNT_NAME = os.getenv("NBX_STORAGE_NAME")
 AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
 STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
 MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+
+API_AUTH_HEADER = os.getenv("NBX_API_AUTH_HEADER")
