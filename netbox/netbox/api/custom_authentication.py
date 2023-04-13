@@ -15,7 +15,6 @@ from utilities.request import get_client_ip
 def get_authorization_header(request):
     """
     Return request's 'Authorization:' header, as a bytestring.
-
     Hide some test client ickyness where the header can be unicode.
     """
     auth = request.META.get("HTTP_" + settings.API_AUTH_HEADER, b'')
@@ -27,10 +26,8 @@ def get_authorization_header(request):
 class CustomTokenAuthentication(authentication.TokenAuthentication):
     """
     Simple token based authentication.
-
     Clients should authenticate by passing the token key in the "Authorization"
     HTTP header, prepended with the string "Token ".  For example:
-
         Authorization: Token 401f7ac837da42b97f613d789819ff93537bee6a
     """
 
