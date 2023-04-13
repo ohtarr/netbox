@@ -42,6 +42,7 @@ class CustomTokenAuthentication(authentication.TokenAuthentication):
 
     """
     A custom token model may be used, but must have the following properties.
+
     * key -- The string identifying the token
     * user -- The user to which the token belongs
     """
