@@ -153,8 +153,8 @@ SESSION_COOKIE_NAME = getattr(configuration, 'SESSION_COOKIE_NAME', 'sessionid')
 SESSION_COOKIE_PATH = CSRF_COOKIE_PATH
 SESSION_COOKIE_SECURE = getattr(configuration, 'SESSION_COOKIE_SECURE', False)
 SESSION_FILE_PATH = getattr(configuration, 'SESSION_FILE_PATH', None)
-#STORAGE_BACKEND = getattr(configuration, 'STORAGE_BACKEND', None)
-#STORAGE_CONFIG = getattr(configuration, 'STORAGE_CONFIG', {})
+STORAGE_BACKEND = getattr(configuration, 'STORAGE_BACKEND', None)
+STORAGE_CONFIG = getattr(configuration, 'STORAGE_CONFIG', {})
 TIME_ZONE = getattr(configuration, 'TIME_ZONE', 'UTC')
 TRANSLATION_ENABLED = getattr(configuration, 'TRANSLATION_ENABLED', True)
 
