@@ -38,4 +38,4 @@ tzdata==2024.1
 
 #custom addons
 django-storages[azure]
-netbox-topology-views
+#netbox-topology-views
